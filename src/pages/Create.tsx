@@ -11,7 +11,6 @@ const Create = () => {
   const plantRating = useRef<HTMLInputElement>(null);
 
   const handleSubmit = () => {
-    console.log(plantName.current);
     axios
       .post(`http://localhost:8080/api/plant`, {
         name: plantName.current?.value,
@@ -22,18 +21,12 @@ const Create = () => {
         url_picture: plantPicture.current?.value,
       })
       .then(function (response) {
-        console.log("reponse" + response.status);
-        if ((response.status = 201)) {
-          console.log(response.data.message);
-          setRetour(response.data.message);
-        }
+        console.log("reponse" + response.statusText);
+        setRetour(response.statusText + ` : Plant Create !`);
       })
       .catch(function (error) {
         console.log("error" + error);
-        if ((error.status = 500)) {
-          console.log(error);
-          setRetour(error.code + " : Please complete all input.");
-        }
+        setRetour(error.code + " : Please complete all input.");
       });
   };
   return (
@@ -47,7 +40,7 @@ const Create = () => {
             type="text"
             className="form-control "
             ref={plantName}
-            // placeholder="exemple : Bruce Wayne"
+            placeholder="exemple : Monstera Deliciosa"
             required
           />
         </div>
@@ -60,7 +53,7 @@ const Create = () => {
             type="number"
             className="form-control"
             ref={plantPrice}
-            // placeholder="100"
+            placeholder="50"
             required
           />
         </div>
@@ -72,7 +65,7 @@ const Create = () => {
             type="number"
             className="form-control"
             ref={plantQuantity}
-            // placeholder="500"
+            placeholder="1"
             required
           />
         </div>
@@ -84,7 +77,7 @@ const Create = () => {
             type="text"
             className="form-control"
             ref={plantCategory}
-            // placeholder="500"
+            placeholder="araceae"
             required
           />
         </div>
@@ -98,7 +91,7 @@ const Create = () => {
             max={5}
             className="form-control"
             ref={plantRating}
-            // placeholder="500"
+            placeholder="500"
             required
           />
         </div>
@@ -110,7 +103,7 @@ const Create = () => {
             type="number"
             className="form-control"
             ref={plantPicture}
-            // placeholder="500"
+            placeholder="http://localhost:8080/assets/plant.png"
             required
           />
         </div>
