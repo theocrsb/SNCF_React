@@ -1,7 +1,143 @@
-import React from "react";
+import axios from "axios";
+import React, { useRef, useState } from "react";
 
 const Create = () => {
-  return <div></div>;
+  const [retour, setRetour] = useState("");
+  const plantName = useRef<HTMLInputElement>(null);
+  const plantPrice = useRef<HTMLInputElement>(null);
+  const plantQuantity = useRef<HTMLInputElement>(null);
+  const plantCategory = useRef<HTMLInputElement>(null);
+  const plantPicture = useRef<HTMLInputElement>(null);
+  const plantRating = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = () => {
+    console.log(plantName.current);
+    axios
+      .post(`http://localhost:8080/api/plant`, {
+        name: plantName.current?.value,
+        unitprice_ati: plantPrice.current?.value,
+        quantity: plantQuantity.current?.value,
+        category: plantCategory.current?.value,
+        rating: plantRating.current?.value,
+        url_picture: plantPicture.current?.value,
+      })
+      .then(function (response) {
+        console.log("reponse" + response.status);
+        if ((response.status = 201)) {
+          console.log(response.data.message);
+          setRetour(response.data.message);
+        }
+      })
+      .catch(function (error) {
+        console.log("error" + error);
+        if ((error.status = 500)) {
+          console.log(error);
+          setRetour(error.code + " : Please complete all input.");
+        }
+      });
+  };
+  return (
+    <div className="d-flex justifycenter">
+      <div className="w-50 m-3">
+        <div className="input-group m-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Name</span>
+          </div>
+          <input
+            type="text"
+            className="form-control "
+            ref={plantName}
+            // placeholder="exemple : Bruce Wayne"
+            required
+          />
+        </div>
+
+        <div className="input-group m-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Unite Price</span>
+          </div>
+          <input
+            type="number"
+            className="form-control"
+            ref={plantPrice}
+            // placeholder="100"
+            required
+          />
+        </div>
+        <div className="input-group m-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Quantity</span>
+          </div>
+          <input
+            type="number"
+            className="form-control"
+            ref={plantQuantity}
+            // placeholder="500"
+            required
+          />
+        </div>
+        <div className="input-group m-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Category</span>
+          </div>
+          <input
+            type="text"
+            className="form-control"
+            ref={plantCategory}
+            // placeholder="500"
+            required
+          />
+        </div>
+        <div className="input-group m-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Rating</span>
+          </div>
+          <input
+            type="number"
+            min={1}
+            max={5}
+            className="form-control"
+            ref={plantRating}
+            // placeholder="500"
+            required
+          />
+        </div>
+        <div className="input-group m-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">URL Picture</span>
+          </div>
+          <input
+            type="number"
+            className="form-control"
+            ref={plantPicture}
+            // placeholder="500"
+            required
+          />
+        </div>
+        <div className="d-flex justifycenter mb-3">
+          <button
+            onClick={handleSubmit}
+            type="button"
+            className="btn btn-secondary btn-lg btn-block"
+            value="Créer ce nouveau Hero"
+          >
+            Create New Plant
+          </button>
+        </div>
+
+        <div
+          className="text-center"
+          style={{
+            fontWeight: "bolder",
+            fontSize: 40,
+            color: "black",
+          }}
+        >
+          {retour}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Create;
