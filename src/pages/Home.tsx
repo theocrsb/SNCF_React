@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 // import { min } from "lodash";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 export interface Plante {
   id: string;
@@ -200,49 +201,51 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <ul className="d-flex justify-content-between flex-wrap">
+
+        <ul className="d-flex justify-content-between flex-wrap ">
           {listPlantDisplayed.map((plante, i) => (
-            <li
-              key={i}
-              className="card"
-              style={{
-                width: 210,
-                marginRight: 200,
-                marginBottom: 40,
-              }}
-            >
-              <img
-                className="card-img-top"
-                src={`http://localhost:8080/assets/${plante.url_picture}`}
-                alt="plantes"
-                width="180px"
-                max-height="200"
-              />
-              <div className="card-body">
-                <div className="card-title">{plante.name}</div>
-                <div className="">{plante.category}</div>
-                <div className="">⭐{plante.rating}</div>
-                <div className="d-flex">
-                  {" "}
-                  <div
-                    style={{
-                      width: 200,
-                      height: 20,
-                    }}
-                  >
-                    💵 {plante.unitprice_ati}€{" "}
+            <NavLink to={`/home/${plante.id} `}>
+              <li
+                key={plante.id}
+                className="card "
+                style={{
+                  width: 210,
+                  marginRight: 200,
+                  marginBottom: 40,
+                }}
+              >
+                <img
+                  className="card-img-top"
+                  src={`http://localhost:8080/assets/${plante.url_picture}`}
+                  alt="plantes"
+                  width="180px"
+                  max-height="200"
+                />
+                <div className="card-body">
+                  <div className="card-title">{plante.name}</div>
+                  <div className="">{plante.category}</div>
+                  <div className="">⭐{plante.rating}</div>
+                  <div className="d-flex">
+                    <div
+                      style={{
+                        width: 200,
+                        height: 20,
+                      }}
+                    >
+                      💵 {plante.unitprice_ati}€
+                    </div>
+                    <input
+                      type="button"
+                      id="forMe"
+                      value="Pour moi !"
+                      className="btn btn-success text-center"
+                    />
+                    <label htmlFor="forMe"></label>
                   </div>
-                  <input
-                    type="button"
-                    id="forMe"
-                    value="Pour moi !"
-                    className="btn btn-success text-center"
-                  />{" "}
-                  <label htmlFor="forMe"></label>
                 </div>
-              </div>
-            </li>
-          ))}{" "}
+              </li>
+            </NavLink>
+          ))}
         </ul>
       </div>
     </div>
