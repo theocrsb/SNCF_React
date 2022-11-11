@@ -36,6 +36,14 @@ const NavBar = () => {
                 Details
               </NavLink>
             </li>
+            <li className="nav-item">
+              {/* <a className='nav-link' href='#'>
+                Details
+              </a> */}
+              <NavLink to="/create" className="nav-link">
+                Create
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
