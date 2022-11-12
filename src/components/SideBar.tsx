@@ -18,10 +18,6 @@ const SideBar = ({
   const categories = _.uniq(listElementPlant.map((plante) => plante.category));
   const [checkCategories, setCheckCategories] = useState<string[]>([]);
   const [minMax, setMinMax] = useState<number[]>([0, 0]);
-  // console.log(minMax);
-  // let [Min, Max] = minMax;
-  // console.log(minMax[Min]);
-  // setMinMax([min, max]);
 
   function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
     let tab: string[] = [];
@@ -41,27 +37,22 @@ const SideBar = ({
     } else {
       setMin(0);
     }
-    //console.log(priceMin);
+ 
   };
 
   const handleChangeMax = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.valueAsNumber >= 0) {
-      // minMax[Max] = e.currentTarget.valueAsNumber;
       setMax(e.currentTarget.valueAsNumber);
     } else {
       setMax(9999);
     }
-    //console.log(priceMax);
+
   };
-  //  console.log(priceMax);
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    // console.log(min);
-    // console.log(max);
     setMinMax([min, max]);
     onChangeMinMax([min, max]);
   };
 
-  //console.log(minMax);
   return (
     <div className="custom-side-bar flex-shrink-0 bg-white border-end">
       <div className="p-3 border-bottom">

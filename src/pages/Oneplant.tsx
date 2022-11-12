@@ -5,6 +5,7 @@ import { Plante } from "./Home";
 
 const Oneplant = () => {
   const [oneplant, setOneplant] = useState<Plante>();
+  const [retour, setRetour] = useState<string>();
   const params = useParams();
   // console.log(params.id);
 
@@ -19,6 +20,20 @@ const Oneplant = () => {
       });
   }, []);
   console.log(oneplant?.name);
+  const handleclickD = () => {
+    axios
+      .delete<Plante>(`http://localhost:8080/api/plant/${params.id}`)
+      .then((x) => {
+        console.log(x.statusText);
+        setRetour(
+          x.statusText + ` : Plant with id : ${params.id} was delete !`
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+        setRetour(error);
+      });
+  };
   return (
     <div>
       <div className="d-flex mt-5 justifycenter">
@@ -61,6 +76,30 @@ const Oneplant = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="d-flex justify-content-around">
+        {/* <NavLink to={`/update/${}`}>
+          <button type="button" className="btn btn-outline-secondary m-3">
+            Update
+          </button>
+        </NavLink> */}
+        <button
+          type="button"
+          className="btn btn-outline-secondary m-3"
+          onClick={handleclickD}
+        >
+          Delete
+        </button>
+      </div>
+      <div
+        className="text-center"
+        style={{
+          fontWeight: "bolder",
+          fontSize: 40,
+          color: "black",
+        }}
+      >
+        {retour}
       </div>
     </div>
   );
