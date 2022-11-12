@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Details from "./pages/Oneplant";
 import Selectid from "./pages/Selectid";
 import Create from "./pages/Create";
+import Update from "./pages/Update";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/details" element={<Details />} />
           <Route path="/selectid" element={<Selectid />} />
           <Route path="/create" element={<Create />} />
+          <Route path="/update/:id" element={<Update />} />
         </Routes>
       </BrowserRouter>
     </div>

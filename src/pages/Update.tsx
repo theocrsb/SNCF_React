@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 
-const Create = () => {
+const Update = () => {
   const [retour, setRetour] = useState("");
   const plantName = useRef<HTMLInputElement>(null);
   const plantPrice = useRef<HTMLInputElement>(null);
@@ -9,10 +10,11 @@ const Create = () => {
   const plantCategory = useRef<HTMLInputElement>(null);
   const plantPicture = useRef<HTMLInputElement>(null);
   const plantRating = useRef<HTMLInputElement>(null);
+  const params = useParams();
 
   const handleSubmit = () => {
     axios
-      .post(`http://localhost:8080/api/plant`, {
+      .put(`http://localhost:8080/api/plant/${params.id}`, {
         name: plantName.current?.value,
         unitprice_ati: plantPrice.current?.value,
         quantity: plantQuantity.current?.value,
@@ -22,7 +24,7 @@ const Create = () => {
       })
       .then(function (response) {
         console.log("reponse" + response.statusText);
-        setRetour(response.statusText + ` : Plant Create !`);
+        setRetour(response.statusText + ` : Plant Update !`);
       })
       .catch(function (error) {
         console.log("error" + error);
@@ -91,7 +93,7 @@ const Create = () => {
             max={5}
             className="form-control"
             ref={plantRating}
-            placeholder="5"
+            placeholder="500"
             required
           />
         </div>
@@ -100,7 +102,7 @@ const Create = () => {
             <span className="input-group-text">URL Picture</span>
           </div>
           <input
-            type="text"
+            type="number"
             className="form-control"
             ref={plantPicture}
             placeholder="http://localhost:8080/assets/plant.png"
@@ -112,9 +114,9 @@ const Create = () => {
             onClick={handleSubmit}
             type="button"
             className="btn btn-secondary btn-lg btn-block"
-            value=" Create New Plant"
+            value="Update This Plant"
           >
-            Create New Plant
+            Update This Plant
           </button>
         </div>
 
@@ -133,4 +135,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Update;

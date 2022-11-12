@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Plante } from "./Home";
 
 const Oneplant = () => {
@@ -78,11 +78,11 @@ const Oneplant = () => {
         </div>
       </div>
       <div className="d-flex justify-content-around">
-        {/* <NavLink to={`/update/${}`}>
+        <NavLink to={`/update/${oneplant?.id}`}>
           <button type="button" className="btn btn-outline-secondary m-3">
             Update
           </button>
-        </NavLink> */}
+        </NavLink>
         <button
           type="button"
           className="btn btn-outline-secondary m-3"
