@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
+// Reste à ajouter fonctionnalité pour proposer des IMG de plantes !
+
 const Update = () => {
   const [retour, setRetour] = useState("");
   const plantName = useRef<HTMLInputElement>(null);
@@ -24,7 +26,9 @@ const Update = () => {
       })
       .then(function (response) {
         console.log("reponse" + response.statusText);
-        setRetour(response.statusText + ` : Plant Update !`);
+        setRetour(
+          response.statusText + ` : Plant with id : ${params.id} was Update !`
+        );
       })
       .catch(function (error) {
         console.log("error" + error);
@@ -93,7 +97,7 @@ const Update = () => {
             max={5}
             className="form-control"
             ref={plantRating}
-            placeholder="500"
+            placeholder="5"
             required
           />
         </div>
@@ -102,7 +106,7 @@ const Update = () => {
             <span className="input-group-text">URL Picture</span>
           </div>
           <input
-            type="number"
+            type="text"
             className="form-control"
             ref={plantPicture}
             placeholder="http://localhost:8080/assets/plant.png"

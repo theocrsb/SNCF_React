@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
 
+// Reste à ajouter fonctionnalité pour proposer des IMG de plantes !
+
 const Create = () => {
   const [retour, setRetour] = useState("");
   const plantName = useRef<HTMLInputElement>(null);
@@ -44,7 +46,6 @@ const Create = () => {
             required
           />
         </div>
-
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Unite Price</span>
@@ -117,7 +118,7 @@ const Create = () => {
             Create New Plant
           </button>
         </div>
-
+        n
         <div
           className="text-center"
           style={{
