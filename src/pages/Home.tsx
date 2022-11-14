@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 // import { min } from "lodash";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import StarRating from "../components/StarRating";
 
 export interface Plante {
   id: string;
@@ -204,7 +205,7 @@ const Home = () => {
 
         <ul className="d-flex justify-content-between flex-wrap ">
           {listPlantDisplayed.map((plante, i) => (
-            <NavLink to={`/home/${plante.id} `} >
+            <NavLink to={`/home/${plante.id} `}>
               <li
                 key={plante.id}
                 className="card "
@@ -224,7 +225,8 @@ const Home = () => {
                 <div className="card-body">
                   <div className="card-title">{plante.name}</div>
                   <div className="">{plante.category}</div>
-                  <div className="">⭐{plante.rating}</div>
+                  <StarRating listplantprops={plante.rating} />
+                  {/* <div className="">⭐{plante.rating}</div> */}
                   <div className="d-flex">
                     <div
                       style={{

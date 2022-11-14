@@ -1,5 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  LegacyRef,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Plante } from "./Home";
 
 // Reste à ajouter fonctionnalité pour proposer des IMG de plantes !
@@ -10,7 +16,7 @@ const Create = () => {
   const plantPrice = useRef<HTMLInputElement>(null);
   const plantQuantity = useRef<HTMLInputElement>(null);
   const plantCategory = useRef<HTMLInputElement>(null);
-  const plantPicture = useRef<HTMLInputElement>(null);
+  const plantPicture = useRef<HTMLSelectElement>(null);
   const plantRating = useRef<HTMLInputElement>(null);
   const [listplant, setListplant] = useState<Plante[]>([]);
   const handleSubmit = () => {
@@ -43,7 +49,7 @@ const Create = () => {
       });
   }, []);
   console.log(listplant);
-
+  console.log(`plantPicture` + plantPicture);
   return (
     <div className="d-flex justifycenter">
       <div className="w-50 m-3">
@@ -109,28 +115,21 @@ const Create = () => {
             required
           />
         </div>
-        <div className="input-group m-3">
+        <div className="input-group m-3 w-100">
           <div className="input-group-prepend">
             <span className="input-group-text">URL Picture</span>
           </div>
-          <label htmlFor="img">
-            Choose an image :{" "}
-            <select name="img" id="img">
-              <option value="">--Please choose an image--</option>
-              {listplant.map((x) => (
-                <option
-                  style={{
-                    backgroundImage: `http://localhost:8080/assets/${x.url_picture}`,
-                    width: 50,
-                    height: 50,
-                  }}
-                  value={x.url_picture}
-                >
-                  {x.url_picture}
-                </option>
-              ))}
-            </select>
-          </label>
+
+          <select
+            name="img"
+            id="img"
+            ref={plantPicture}
+            className="form-control"
+          >
+            {listplant.map((x) => (
+              <option value={x.url_picture}>{x.url_picture}</option>
+            ))}
+          </select>
         </div>
         <div className="d-flex justifycenter mb-3">
           <button
@@ -142,7 +141,7 @@ const Create = () => {
             Create New Plant
           </button>
         </div>
-        n
+
         <div
           className="text-center"
           style={{

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
+import StarRating from "../components/StarRating";
 import { Plante } from "./Home";
 
 const Oneplant = () => {
@@ -57,6 +58,7 @@ const Oneplant = () => {
             <div className="card-title">{oneplant?.name}</div>
             <div className="">{oneplant?.category}</div>
             <div className="">⭐{oneplant?.rating}</div>
+         
             <div className="d-flex">
               <div
                 style={{

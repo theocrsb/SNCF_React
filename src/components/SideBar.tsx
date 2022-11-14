@@ -1,6 +1,7 @@
 import _ from "lodash";
 import React, { useState } from "react";
 import { Plante } from "../pages/Home";
+import StarRating from "./StarRating";
 
 interface filterSideBarProps {
   listElementPlant: Plante[];
@@ -37,7 +38,6 @@ const SideBar = ({
     } else {
       setMin(0);
     }
- 
   };
 
   const handleChangeMax = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +46,6 @@ const SideBar = ({
     } else {
       setMax(9999);
     }
-
   };
   const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
     setMinMax([min, max]);
@@ -122,14 +121,14 @@ const SideBar = ({
       </ul>
       <div className="p-3 7 border-top">
         <p className="mb-1 fs-5 fw-semibold">Avis</p>
-        <p
+        {/* <p
           style={{
             margin: 10,
           }}
         >
           ⭐⭐⭐⭐⭐
-        </p>
-
+        </p> */}
+        {/* <StarRating /> */}
         <input
           type="button"
           id="avis"

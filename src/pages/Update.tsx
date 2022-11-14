@@ -52,7 +52,9 @@ const Update = () => {
 
   return (
     <div className="d-flex justifycenter">
-      <div className="w-50 m-3">
+      {/* mise en commentaire du update en attendant de crée un composant reutilisable */}
+
+      {/* <div className="w-50 m-3">
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Name</span>
@@ -169,7 +171,7 @@ const Update = () => {
         >
           {retour}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
