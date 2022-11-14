@@ -52,7 +52,7 @@ const Home = () => {
       .get("http://localhost:8080/api/plant")
 
       .then((x) => {
-        console.log(x.data.data);
+        // console.log(x.data.data);
         listePlantes = x.data.data;
         setListPlantDisplayed(listePlantes);
       })
@@ -204,7 +204,7 @@ const Home = () => {
 
         <ul className="d-flex justify-content-between flex-wrap ">
           {listPlantDisplayed.map((plante, i) => (
-            <NavLink to={`/home/${plante.id} `}>
+            <NavLink to={`/home/${plante.id} `} >
               <li
                 key={plante.id}
                 className="card "
