@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plante } from "../pages/Home";
 
 interface Listtplantsprops {
@@ -6,9 +6,13 @@ interface Listtplantsprops {
 }
 
 const StarRating = (props: Listtplantsprops) => {
-  console.log(props.listplantprops);
-  const [rating, setRating] = useState(props.listplantprops);
+  //   console.log(props.listplantprops);
+  const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+
+  useEffect(() => {
+    setRating(props.listplantprops);
+  });
 
   return (
     <div className="star-rating">

@@ -28,6 +28,7 @@ let checkedCateg: string[] = [];
 let retourSearchBar: string = "";
 let retourMinMax: number[];
 let clickPrice = 0;
+let retourRating: number;
 const Home = () => {
   const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
     ...listePlantes,
@@ -87,6 +88,11 @@ const Home = () => {
   const handleMinMax = (valueMinMax: number[]) => {
     retourMinMax = valueMinMax;
     masterFunction();
+  };
+
+  const handleRating = (valueRating: number) => {
+    console.log(valueRating);
+    retourRating = valueRating;
   };
 
   // Filtre Total (Master function)
@@ -170,6 +176,7 @@ const Home = () => {
         listElementPlant={listePlantes}
         onChangeCategoriesCheck={handleCheckCategories}
         onChangeMinMax={handleMinMax}
+        onClickRating={handleRating}
       />
 
       <div className="">
@@ -205,9 +212,9 @@ const Home = () => {
 
         <ul className="d-flex justify-content-between flex-wrap ">
           {listPlantDisplayed.map((plante, i) => (
-            <NavLink to={`/home/${plante.id} `}>
+            <NavLink key={i} to={`/home/${plante.id} `}>
               <li
-                key={plante.id}
+                key={i}
                 className="card "
                 style={{
                   width: 210,

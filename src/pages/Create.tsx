@@ -17,16 +17,27 @@ const Create = () => {
   const plantQuantity = useRef<HTMLInputElement>(null);
   const plantCategory = useRef<HTMLInputElement>(null);
   const plantPicture = useRef<HTMLSelectElement>(null);
-  const plantRating = useRef<HTMLInputElement>(null);
+  const plantRating = useRef<HTMLSelectElement>(null);
   const [listplant, setListplant] = useState<Plante[]>([]);
+  console.log(plantRating.current?.value);
+
   const handleSubmit = () => {
+    // const newPlant = {
+    //   name: plantName.current?.value,
+    //   unitprice_ati: Number(plantPrice.current?.value),
+    //   quantity: Number(plantQuantity.current?.value),
+    //   category: plantCategory.current?.value,
+    //   rating: Number(plantRating.current?.value),
+    //   url_picture: plantPicture.current?.value,
+    // };
+    // console.log(newPlant);
     axios
       .post(`http://localhost:8080/api/plant`, {
         name: plantName.current?.value,
-        unitprice_ati: plantPrice.current?.value,
-        quantity: plantQuantity.current?.value,
+        unitprice_ati: Number(plantPrice.current?.value),
+        quantity: Number(plantQuantity.current?.value),
         category: plantCategory.current?.value,
-        rating: plantRating.current?.value,
+        rating: Number(plantRating.current?.value),
         url_picture: plantPicture.current?.value,
       })
       .then(function (response) {
@@ -48,11 +59,12 @@ const Create = () => {
         console.log("error" + error);
       });
   }, []);
-  console.log(listplant);
-  console.log(`plantPicture` + plantPicture);
+  // console.log(listplant);
+  // console.log(`plantPicture` + plantPicture);
   return (
     <div className="d-flex justifycenter">
       <div className="w-50 m-3">
+        {/* input choix name */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Name</span>
@@ -65,6 +77,8 @@ const Create = () => {
             required
           />
         </div>
+
+        {/* input choix prix unité */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Unite Price</span>
@@ -77,6 +91,8 @@ const Create = () => {
             required
           />
         </div>
+
+        {/* input choix quantité */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Quantity</span>
@@ -89,6 +105,8 @@ const Create = () => {
             required
           />
         </div>
+
+        {/* input choix categorie */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Category</span>
@@ -101,20 +119,28 @@ const Create = () => {
             required
           />
         </div>
+
+        {/* input choix rating */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Rating</span>
           </div>
-          <input
-            type="number"
-            min={1}
-            max={5}
-            className="form-control"
+
+          <select
+            name="img"
+            id="img"
             ref={plantRating}
-            placeholder="5"
-            required
-          />
+            className="form-control"
+          >
+            <option value="1">1/5</option>
+            <option value="2">2/5</option>
+            <option value="3">3/5</option>
+            <option value="4">4/5</option>
+            <option value="5">5/5</option>
+          </select>
         </div>
+
+        {/* input choix image */}
         <div className="input-group m-3 w-100">
           <div className="input-group-prepend">
             <span className="input-group-text">URL Picture</span>
@@ -126,11 +152,15 @@ const Create = () => {
             ref={plantPicture}
             className="form-control"
           >
-            {listplant.map((x) => (
-              <option value={x.url_picture}>{x.url_picture}</option>
+            {listplant.map((x, i) => (
+              <option key={i} value={x.url_picture}>
+                {x.url_picture}
+              </option>
             ))}
           </select>
         </div>
+
+        {/* btn Submit */}
         <div className="d-flex justifycenter mb-3">
           <button
             onClick={handleSubmit}

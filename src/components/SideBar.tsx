@@ -7,6 +7,7 @@ interface filterSideBarProps {
   listElementPlant: Plante[];
   onChangeCategoriesCheck: { (checkCategories: string[]): void };
   onChangeMinMax: { (min: number[]): void };
+  onClickRating: { (valueRating: number): void };
 }
 
 const SideBar = ({
@@ -19,6 +20,10 @@ const SideBar = ({
   const categories = _.uniq(listElementPlant.map((plante) => plante.category));
   const [checkCategories, setCheckCategories] = useState<string[]>([]);
   const [minMax, setMinMax] = useState<number[]>([0, 0]);
+  // usestate pour le tri rating
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+  let valueRating: number;
 
   function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
     let tab: string[] = [];
@@ -52,6 +57,11 @@ const SideBar = ({
     onChangeMinMax([min, max]);
   };
 
+  const handleClickRating = () => {
+    return (valueRating = rating);
+  };
+
+  console.log(rating);
   return (
     <div className="custom-side-bar flex-shrink-0 bg-white border-end">
       <div className="p-3 border-bottom">
@@ -128,12 +138,34 @@ const SideBar = ({
         >
           ⭐⭐⭐⭐⭐
         </p> */}
-        {/* <StarRating /> */}
+        {/* <StarRating listplantprops={5} /> */}
+
+        {/* starRating */}
+
+        <div className="star-rating">
+          {[...Array(5)].map((star, index) => {
+            index += 1;
+            return (
+              <button
+                type="button"
+                key={index}
+                className={index <= (hover || rating) ? "on" : "off"}
+                onClick={() => setRating(index)}
+                onMouseEnter={() => setHover(index)}
+                onMouseLeave={() => setHover(rating)}
+              >
+                <span className="star">&#9733;</span>
+              </button>
+            );
+          })}
+        </div>
+
         <input
           type="button"
           id="avis"
           value="valider"
           className="btn btn-success text-center"
+          onClick={handleClickRating}
         />
         <label htmlFor="avis"></label>
       </div>
