@@ -29,10 +29,19 @@ let retourSearchBar: string = "";
 let retourMinMax: number[];
 let clickPrice = 0;
 let retourRating: number;
+
 const Home = () => {
-  const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
-    ...listePlantes,
-  ]);
+  useEffect(() => {
+    const tokens = localStorage.getItem("tokens");
+    console.log("token home", tokens);
+    axios
+      .get(`http://localhost:8080/api/plant`, {
+        headers: { authorization: `Bearer ${tokens}` },
+      })
+      .then((response) => {
+        console.log(response);
+      });
+  }, []);
 
   // useEffect(() => {
   //   axios
@@ -62,6 +71,9 @@ const Home = () => {
         console.log(error);
       });
   }, []);
+  const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
+    ...listePlantes,
+  ]);
   // console.log("mon tableau de plantes trié : " + listPlantDisplayed);
 
   //filtre checkbox
