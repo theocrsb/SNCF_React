@@ -39,38 +39,11 @@ const Home = () => {
         headers: { authorization: `Bearer ${tokens}` },
       })
       .then((response) => {
-        console.log(response);
+        console.log("response dans HOME", response);
+        setListPlantDisplayed(response.data.data);
       });
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3004/plants")
-
-  //     .then((x) => {
-
-  //       listePlantes = x.data;
-  //       setListPlantDisplayed(x.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-
-  // }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/plant")
-
-      .then((x) => {
-        // console.log(x.data.data);
-        listePlantes = x.data.data;
-        setListPlantDisplayed(listePlantes);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
   const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
     ...listePlantes,
   ]);
