@@ -14,6 +14,7 @@ const SideBar = ({
   listElementPlant,
   onChangeCategoriesCheck,
   onChangeMinMax,
+  onClickRating,
 }: filterSideBarProps) => {
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(9999);
@@ -23,8 +24,9 @@ const SideBar = ({
   // usestate pour le tri rating
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
-  let valueRating: number;
-
+  const [valueRating, setValueRating] = useState(0);
+  // let valueRating: number;
+  console.log(valueRating);
   function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
     let tab: string[] = [];
     if (e.currentTarget.checked) {
@@ -58,10 +60,10 @@ const SideBar = ({
   };
 
   const handleClickRating = () => {
-    return (valueRating = rating);
+    setValueRating(rating);
+    onClickRating(rating);
   };
 
-  console.log(rating);
   return (
     <div className="custom-side-bar flex-shrink-0 bg-white border-end">
       <div className="p-3 border-bottom">

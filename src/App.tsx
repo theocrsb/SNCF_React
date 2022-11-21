@@ -8,7 +8,6 @@ import Create from "./pages/Create";
 import Update from "./pages/Update";
 import Connect from "./pages/Connect";
 import Register from "./pages/Register";
-import Test from "./pages/Test";
 
 const App = () => {
   return (
@@ -25,7 +24,6 @@ const App = () => {
           <Route path="/update/:id" element={<Update />} />
           <Route path="/connect" element={<Connect />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </div>

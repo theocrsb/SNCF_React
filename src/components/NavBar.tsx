@@ -60,14 +60,6 @@ const NavBar = () => {
                 Sign in
               </NavLink>
             </li>
-            <li className="nav-item">
-              {/* <a className='nav-link' href='#'>
-                Details
-              </a> */}
-              <NavLink to="/test" className="nav-link">
-                Test
-              </NavLink>
-            </li>
           </ul>
         </div>
       </div>

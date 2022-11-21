@@ -24,6 +24,18 @@ const Connect = () => {
           console.log("erreur dans le handleSubmitForm", error);
         });
     }
+
+    // useEffect(() => {
+    //   const tokens = localStorage.getItem("tokens");
+    //   console.log("token home", tokens);
+    //   axios
+    //     .get(`http://localhost:8080/api/plant`, {
+    //       headers: { authorization: `Bearer ${tokens}` },
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //     });
+    // }, []);
   };
   return (
     <div>

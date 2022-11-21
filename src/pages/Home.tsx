@@ -74,6 +74,7 @@ const Home = () => {
   const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
     ...listePlantes,
   ]);
+
   // console.log("mon tableau de plantes trié : " + listPlantDisplayed);
 
   //filtre checkbox
@@ -82,7 +83,6 @@ const Home = () => {
     /**
      * Filtrer nos données ici
      */
-
     checkedCateg = [...mesCategoriesChecked];
 
     masterFunction();
@@ -103,8 +103,9 @@ const Home = () => {
   };
 
   const handleRating = (valueRating: number) => {
-    console.log(valueRating);
+    console.log("valueRating dans handle", valueRating);
     retourRating = valueRating;
+    masterFunction();
   };
 
   // Filtre Total (Master function)
@@ -129,6 +130,13 @@ const Home = () => {
         (x) =>
           x.unitprice_ati >= retourMinMax[0] &&
           x.unitprice_ati <= retourMinMax[1]
+      );
+    }
+
+    if (retourRating) {
+      console.log("le retourRating fonctionne", retourRating);
+      xultFilteredPlants = xultFilteredPlants.filter(
+        (x) => x.rating <= retourRating
       );
     }
 
