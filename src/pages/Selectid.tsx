@@ -1,12 +1,18 @@
 import React, { useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 
 const Selectid = () => {
   const [idplant, setIdplant] = useState<number>();
 
+  let tokens = localStorage.getItem("tokens");
   const handleclick = (e: any) => {
     setIdplant(e.currentTarget.value);
   };
+
+  if (!tokens) {
+    console.log("pas de token");
+    return <Navigate to="/connect" />;
+  }
   return (
     <div>
       <form>

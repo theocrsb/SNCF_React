@@ -17,11 +17,13 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path="/home" element={<Home />} />
+
           <Route path="/home/:id" element={<Details />} />
           <Route path="/details" element={<Details />} />
           <Route path="/selectid" element={<Selectid />} />
           <Route path="/create" element={<Create />} />
           <Route path="/update/:id" element={<Update />} />
+
           <Route path="/connect" element={<Connect />} />
           <Route path="/register" element={<Register />} />
         </Routes>

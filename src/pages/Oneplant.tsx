@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
-import StarRating from "../components/StarRating";
+import { Navigate, NavLink, useParams } from "react-router-dom";
+
 import { Plante } from "./Home";
 
 const Oneplant = () => {
@@ -10,6 +10,7 @@ const Oneplant = () => {
   const params = useParams();
   // console.log(params.id);
 
+  let tokens = localStorage.getItem("tokens");
   useEffect(() => {
     const tokens = localStorage.getItem("tokens");
     axios
@@ -26,18 +27,23 @@ const Oneplant = () => {
   console.log(oneplant?.name);
   const handleclickD = () => {
     axios
-      .delete<Plante>(`http://localhost:8080/api/plant/${params.id}`)
+      .delete(`http://localhost:8080/api/plant/${params.id}`, {
+        headers: { authorization: `Bearer ${tokens}` },
+      })
       .then((x) => {
-        console.log(x.statusText);
-        setRetour(
-          x.statusText + ` : Plant with id : ${params.id} was delete !`
-        );
+        console.log(x.data);
+        setRetour(x.data.message);
       })
       .catch((error) => {
         console.log(error);
         setRetour(error);
       });
   };
+
+  if (!tokens) {
+    console.log("pas de token");
+    return <Navigate to="/connect" />;
+  }
   return (
     <div>
       <div className="d-flex mt-5 justifycenter">

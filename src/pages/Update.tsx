@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Plante } from "./Home";
 
 // Reste à ajouter fonctionnalité pour proposer des IMG de plantes !
@@ -15,6 +15,8 @@ const Update = () => {
   const plantRating = useRef<HTMLInputElement>(null);
   const params = useParams();
   const [listplant, setListplant] = useState<Plante[]>([]);
+
+  let tokens = localStorage.getItem("tokens");
 
   const handleSubmit = () => {
     axios
@@ -50,11 +52,13 @@ const Update = () => {
   }, []);
   console.log(listplant);
 
+  if (!tokens) {
+    console.log("pas de token");
+    return <Navigate to="/connect" />;
+  }
   return (
     <div className="d-flex justifycenter">
-      {/* mise en commentaire du update en attendant de crée un composant reutilisable */}
-
-      {/* <div className="w-50 m-3">
+      <div className="w-50 m-3">
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Name</span>
@@ -127,14 +131,7 @@ const Update = () => {
             <select name="img" id="img">
               <option value="">--Please choose an image--</option>
               {listplant.map((x) => (
-                <option
-                  // style={{
-                  //   backgroundImage: `http://localhost:8080/assets/${x.url_picture}`,
-                  //   width: 50,
-                  //   height: 50,
-                  // }}
-                  value={x.url_picture}
-                >
+                <option value={x.url_picture}>
                   {x.url_picture}{" "}
                   <img
                     src={`http://localhost:8080/assets/${x.url_picture}`}
@@ -171,7 +168,7 @@ const Update = () => {
         >
           {retour}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

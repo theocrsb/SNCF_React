@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Plante } from "../pages/Home";
-import StarRating from "./StarRating";
 
 interface filterSideBarProps {
   listElementPlant: Plante[];
@@ -62,6 +62,11 @@ const SideBar = ({
   const handleClickRating = () => {
     setValueRating(rating);
     onClickRating(rating);
+  };
+
+  const handleClickOut = () => {
+    console.log("dans le delete");
+    localStorage.removeItem("tokens");
   };
 
   return (
@@ -141,9 +146,7 @@ const SideBar = ({
           ⭐⭐⭐⭐⭐
         </p> */}
         {/* <StarRating listplantprops={5} /> */}
-
         {/* starRating */}
-
         <div className="star-rating">
           {[...Array(5)].map((star, index) => {
             index += 1;
@@ -161,7 +164,6 @@ const SideBar = ({
             );
           })}
         </div>
-
         <input
           type="button"
           id="avis"
@@ -171,6 +173,21 @@ const SideBar = ({
         />
         <label htmlFor="avis"></label>
       </div>
+      <br />
+      <NavLink to="/connect">
+        <div className="text-center">
+          {" "}
+          <label htmlFor="deco">
+            <input
+              type="button"
+              id="deco"
+              value="Sign out"
+              className="btn btn-danger "
+              onClick={handleClickOut}
+            />{" "}
+          </label>
+        </div>
+      </NavLink>
     </div>
   );
 };

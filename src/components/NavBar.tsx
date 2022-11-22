@@ -49,17 +49,15 @@ const NavBar = () => {
                 Details
               </a> */}
               <NavLink to="/connect" className="nav-link">
-                Connect
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              {/* <a className='nav-link' href='#'>
-                Details
-              </a> */}
-              <NavLink to="/register" className="nav-link">
                 Sign in
               </NavLink>
             </li>
+
+            {/* <li className="nav-item">
+              <NavLink to="/register" className="nav-link">
+                Sign in
+              </NavLink>
+            </li> */}
           </ul>
         </div>
       </div>

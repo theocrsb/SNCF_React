@@ -5,7 +5,6 @@ import SearchBar from "../components/SearchBar";
 // import { min } from "lodash";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-import StarRating from "../components/StarRating";
 
 export interface Plante {
   id: string;
@@ -31,7 +30,6 @@ let clickPrice = 0;
 let retourRating: number;
 
 const Home = () => {
-  
   useEffect(() => {
     const tokens = localStorage.getItem("tokens");
     console.log("token home", tokens);
@@ -41,13 +39,15 @@ const Home = () => {
       })
       .then((response) => {
         console.log("response dans HOME", response);
-        setListPlantDisplayed(response.data.data);
+        listePlantes = response.data.data;
+        setListPlantDisplayed(listePlantes);
       });
   }, []);
 
   const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
     ...listePlantes,
   ]);
+  const [rating, setRating] = useState(0);
 
   // console.log("mon tableau de plantes trié : " + listPlantDisplayed);
 
@@ -226,7 +226,20 @@ const Home = () => {
                 <div className="card-body">
                   <div className="card-title">{plante.name}</div>
                   <div className="">{plante.category}</div>
-                  <StarRating listplantprops={plante.rating} />
+
+                  <div className="star-rating">
+                    {[...Array(5)].map((star, index) => {
+                      return (
+                        <button
+                          type="button"
+                          key={index}
+                          className={plante.rating <= index ? "off" : "on"}
+                        >
+                          <span className="star">&#9733;</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                   {/* <div className="">⭐{plante.rating}</div> */}
                   <div className="d-flex">
                     <div

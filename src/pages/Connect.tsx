@@ -1,9 +1,11 @@
 import axios from "axios";
-import React, { FormEvent, useEffect, useRef } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Connect = () => {
   const emailElement = useRef<HTMLInputElement>(null);
   const passwordElement = useRef<HTMLInputElement>(null);
+  const [retour, setRetour] = useState<string>("");
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
@@ -15,31 +17,41 @@ const Connect = () => {
           email: emailElement.current?.value,
           hash: passwordElement.current?.value,
         })
-        .then((x) => {
-          console.log(`valeur token`, x.data.token);
-          const tokens = x.data.token;
+        .then((response) => {
+          const tokens = response.data.token;
           localStorage.setItem("tokens", tokens);
+          console.log(`valeur token connexion`, tokens);
+          let exp = response.data.decoded.exp;
+          console.log(exp);
+          let date = new Date(exp * 1000);
+          let heure = date.getHours();
+          let minutes = date.getMinutes();
+
+          let heureFin = `${heure}h${minutes} ! `;
+          console.log(heure);
+          setRetour(
+            ` ${response.data.message}
+          jusqu'a ${heureFin}`
+          );
         })
         .catch((error) => {
           console.log("erreur dans le handleSubmitForm", error);
+          setRetour(error.data.message);
         });
     }
-
-    // useEffect(() => {
-    //   const tokens = localStorage.getItem("tokens");
-    //   console.log("token home", tokens);
-    //   axios
-    //     .get(`http://localhost:8080/api/plant`, {
-    //       headers: { authorization: `Bearer ${tokens}` },
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //     });
-    // }, []);
   };
   return (
     <div>
-      <div>CONNECT</div>
+      <div
+        className="textcenter"
+        style={{
+          fontWeight: "bold",
+          margin: 30,
+          fontSize: 30,
+        }}
+      >
+        <span>Connexion </span>
+      </div>
       <div>
         <form onClick={handleSubmitForm}>
           <div className="form-floating mb-3">
@@ -66,9 +78,31 @@ const Connect = () => {
             Se connecter
           </button>
         </form>
+        <br />
+        <div className="textcenter">
+          <p>Pas de compte ? </p>
+          <NavLink to="/register">
+            <button className="mt-3 btn btn-success" type="submit">
+              S'inscrire
+            </button>
+          </NavLink>
+        </div>
+      </div>
+      <div
+        className="textcenter"
+        style={{
+          fontWeight: "bold",
+          margin: 30,
+          fontSize: 30,
+        }}
+      >
+        <p>{retour}</p>
       </div>
     </div>
   );
 };
 
 export default Connect;
+function newDate(exp: any): any {
+  throw new Error("Function not implemented.");
+}

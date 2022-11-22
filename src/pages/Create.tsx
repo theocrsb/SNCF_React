@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { Navigate, redirect } from "react-router-dom";
 import { Plante } from "./Home";
 
 // Reste à ajouter fonctionnalité pour proposer des IMG de plantes !
@@ -19,30 +20,29 @@ const Create = () => {
   const plantPicture = useRef<HTMLSelectElement>(null);
   const plantRating = useRef<HTMLSelectElement>(null);
   const [listplant, setListplant] = useState<Plante[]>([]);
-  console.log(plantRating.current?.value);
+
+  let tokens = localStorage.getItem("tokens");
+  console.log("token create", tokens);
 
   const handleSubmit = () => {
-    // const newPlant = {
-    //   name: plantName.current?.value,
-    //   unitprice_ati: Number(plantPrice.current?.value),
-    //   quantity: Number(plantQuantity.current?.value),
-    //   category: plantCategory.current?.value,
-    //   rating: Number(plantRating.current?.value),
-    //   url_picture: plantPicture.current?.value,
-    // };
-    // console.log(newPlant);
     axios
-      .post(`http://localhost:8080/api/plant`, {
-        name: plantName.current?.value,
-        unitprice_ati: Number(plantPrice.current?.value),
-        quantity: Number(plantQuantity.current?.value),
-        category: plantCategory.current?.value,
-        rating: Number(plantRating.current?.value),
-        url_picture: plantPicture.current?.value,
-      })
+      .post(
+        `http://localhost:8080/api/plant`,
+        {
+          name: plantName.current?.value,
+          unitprice_ati: Number(plantPrice.current?.value),
+          quantity: Number(plantQuantity.current?.value),
+          category: plantCategory.current?.value,
+          rating: Number(plantRating.current?.value),
+          url_picture: plantPicture.current?.value,
+        },
+        {
+          headers: { authorization: `Bearer ${tokens}` },
+        }
+      )
       .then(function (response) {
-        // console.log("reponse" + response);
-        setRetour(response.statusText + ` : Plant Create !`);
+        console.log("reponse de la creation de plante", response.data.message);
+        setRetour(response.data.message);
       })
       .catch(function (error) {
         console.log("error" + error);
@@ -59,8 +59,11 @@ const Create = () => {
         console.log("error" + error);
       });
   }, []);
-  // console.log(listplant);
-  // console.log(`plantPicture` + plantPicture);
+
+  if (!tokens) {
+    console.log("pas de token");
+    return <Navigate to="/connect" />;
+  }
   return (
     <div className="d-flex justifycenter">
       <div className="w-50 m-3">
