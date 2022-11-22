@@ -22,7 +22,7 @@ const Create = () => {
   const [listplant, setListplant] = useState<Plante[]>([]);
 
   let tokens = localStorage.getItem("tokens");
-  console.log("token create", tokens);
+  // console.log("token", tokens);
 
   const handleSubmit = () => {
     axios
@@ -41,12 +41,14 @@ const Create = () => {
         }
       )
       .then(function (response) {
-        console.log("reponse de la creation de plante", response.data.message);
+        console.log(
+          `reponse de la creation de plante ${response.data.message}`
+        );
         setRetour(response.data.message);
       })
       .catch(function (error) {
         console.log("error" + error);
-        setRetour(error.code + " : Please complete all input.");
+        setRetour(`${error.code} : Please complete all input.`);
       });
   };
   useEffect(() => {
@@ -56,7 +58,7 @@ const Create = () => {
         setListplant(response.data.data);
       })
       .catch(function (error) {
-        console.log("error" + error);
+        console.log("error", error);
       });
   }, []);
 

@@ -103,14 +103,14 @@ const Oneplant = () => {
         </button>
       </div>
       <div
-        className="text-center"
+        className="textcenter"
         style={{
-          fontWeight: "bolder",
-          fontSize: 40,
-          color: "black",
+          fontWeight: "bold",
+          margin: 30,
+          fontSize: 30,
         }}
       >
-        {retour}
+        <p>{retour}</p>
       </div>
     </div>
   );

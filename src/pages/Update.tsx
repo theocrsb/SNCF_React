@@ -11,46 +11,62 @@ const Update = () => {
   const plantPrice = useRef<HTMLInputElement>(null);
   const plantQuantity = useRef<HTMLInputElement>(null);
   const plantCategory = useRef<HTMLInputElement>(null);
-  const plantPicture = useRef<HTMLInputElement>(null);
-  const plantRating = useRef<HTMLInputElement>(null);
+  const plantPicture = useRef<HTMLSelectElement>(null);
+  const plantRating = useRef<HTMLSelectElement>(null);
   const params = useParams();
   const [listplant, setListplant] = useState<Plante[]>([]);
 
   let tokens = localStorage.getItem("tokens");
 
   const handleSubmit = () => {
-    axios
-      .put(`http://localhost:8080/api/plant/${params.id}`, {
-        name: plantName.current?.value,
-        unitprice_ati: plantPrice.current?.value,
-        quantity: plantQuantity.current?.value,
-        category: plantCategory.current?.value,
-        rating: plantRating.current?.value,
-        url_picture: plantPicture.current?.value,
-      })
-      .then(function (response) {
-        console.log("reponse" + response.statusText);
-        setRetour(
-          response.statusText + ` : Plant with id : ${params.id} was Update !`
-        );
-      })
-      .catch(function (error) {
-        console.log("error" + error);
-        setRetour(error.code + " : Please complete all input.");
-      });
+    if (
+      plantName.current?.value &&
+      plantPrice.current?.value &&
+      plantQuantity.current?.value &&
+      plantCategory.current?.value &&
+      plantRating.current?.value &&
+      plantRating.current?.value
+    ) {
+      axios
+        .put(
+          `http://localhost:8080/api/plant/${params.id}`,
+          {
+            name: plantName.current?.value,
+            unitprice_ati: plantPrice.current?.value,
+            quantity: plantQuantity.current?.value,
+            category: plantCategory.current?.value,
+            rating: plantRating.current?.value,
+            url_picture: plantPicture.current?.value,
+          },
+          {
+            headers: { authorization: `Bearer ${tokens}` },
+          }
+        )
+        .then(function (response) {
+          console.log("reponse", response.statusText);
+          setRetour(response.data.message);
+        })
+        .catch(function (error) {
+          console.log("error", error.response.data.message);
+          setRetour(error.response.data.message);
+        });
+    }
   };
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/plant`)
+      .get(`http://localhost:8080/api/plant`, {
+        headers: { authorization: `Bearer ${tokens}` },
+      })
       .then(function (response) {
         setListplant(response.data.data);
       })
       .catch(function (error) {
-        console.log("error" + error);
+        console.log("error", error);
+        setRetour(error);
       });
   }, []);
-  console.log(listplant);
+  // console.log(listplant);
 
   if (!tokens) {
     console.log("pas de token");
@@ -59,6 +75,7 @@ const Update = () => {
   return (
     <div className="d-flex justifycenter">
       <div className="w-50 m-3">
+        {/* input choix name */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Name</span>
@@ -72,6 +89,7 @@ const Update = () => {
           />
         </div>
 
+        {/* input choix prix unité */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Unite Price</span>
@@ -84,6 +102,8 @@ const Update = () => {
             required
           />
         </div>
+
+        {/* input choix quantité */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Quantity</span>
@@ -96,6 +116,8 @@ const Update = () => {
             required
           />
         </div>
+
+        {/* input choix categorie */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Category</span>
@@ -108,43 +130,47 @@ const Update = () => {
             required
           />
         </div>
+
+        {/* input choix rating */}
         <div className="input-group m-3">
           <div className="input-group-prepend">
             <span className="input-group-text">Rating</span>
           </div>
-          <input
-            type="number"
-            min={1}
-            max={5}
-            className="form-control"
+
+          <select
+            name="img"
+            id="img"
             ref={plantRating}
-            placeholder="5"
+            className="form-control"
             required
-          />
+          >
+            <option value="1">1/5</option>
+            <option value="2">2/5</option>
+            <option value="3">3/5</option>
+            <option value="4">4/5</option>
+            <option value="5">5/5</option>
+          </select>
         </div>
-        <div className="input-group m-3">
+
+        {/* input choix image */}
+        <div className="input-group m-3 w-100">
           <div className="input-group-prepend">
             <span className="input-group-text">URL Picture</span>
           </div>
-          <label htmlFor="img">
-            Choose an image :{" "}
-            <select name="img" id="img">
-              <option value="">--Please choose an image--</option>
-              {listplant.map((x) => (
-                <option value={x.url_picture}>
-                  {x.url_picture}{" "}
-                  <img
-                    src={`http://localhost:8080/assets/${x.url_picture}`}
-                    alt="PLANTE"
-                    style={{
-                      width: 50,
-                      height: 50,
-                    }}
-                  />
-                </option>
-              ))}
-            </select>
-          </label>
+
+          <select
+            name="img"
+            id="img"
+            ref={plantPicture}
+            className="form-control"
+            required
+          >
+            {listplant.map((x, i) => (
+              <option key={i} value={x.url_picture}>
+                {x.url_picture}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="d-flex justifycenter mb-3">
@@ -159,14 +185,14 @@ const Update = () => {
         </div>
 
         <div
-          className="text-center"
+          className="textcenter"
           style={{
-            fontWeight: "bolder",
-            fontSize: 40,
-            color: "black",
+            fontWeight: "bold",
+            margin: 30,
+            fontSize: 30,
           }}
         >
-          {retour}
+          <p>{retour}</p>
         </div>
       </div>
     </div>
