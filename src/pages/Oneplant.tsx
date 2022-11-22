@@ -11,8 +11,11 @@ const Oneplant = () => {
   // console.log(params.id);
 
   useEffect(() => {
+    const tokens = localStorage.getItem("tokens");
     axios
-      .get(`http://localhost:8080/api/plant/${params.id}`)
+      .get(`http://localhost:8080/api/plant/${params.id}`, {
+        headers: { authorization: `Bearer ${tokens}` },
+      })
       .then((x) => {
         setOneplant(x.data.data[0]);
       })
@@ -58,7 +61,7 @@ const Oneplant = () => {
             <div className="card-title">{oneplant?.name}</div>
             <div className="">{oneplant?.category}</div>
             <div className="">⭐{oneplant?.rating}</div>
-         
+
             <div className="d-flex">
               <div
                 style={{

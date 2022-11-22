@@ -31,6 +31,7 @@ let clickPrice = 0;
 let retourRating: number;
 
 const Home = () => {
+  
   useEffect(() => {
     const tokens = localStorage.getItem("tokens");
     console.log("token home", tokens);
