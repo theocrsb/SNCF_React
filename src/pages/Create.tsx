@@ -44,6 +44,9 @@ const Create = () => {
         console.log(
           `reponse de la creation de plante ${response.data.message}`
         );
+        if (response.data.message.toString() === "not verify") {
+          localStorage.removeItem("tokens");
+        }
         setRetour(response.data.message);
       })
       .catch(function (error) {

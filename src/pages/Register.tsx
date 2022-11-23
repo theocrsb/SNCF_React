@@ -6,24 +6,30 @@ const Register = () => {
   const emailElement = useRef<HTMLInputElement>(null);
   const passwordElement = useRef<HTMLInputElement>(null);
   const [retour, setRetour] = useState<string>("");
+  let autorisation = "user";
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
     console.log(emailElement.current?.value);
     console.log(passwordElement.current?.value);
-    if (emailElement.current?.value && passwordElement.current?.value) {
+    if (
+      emailElement.current?.value &&
+      passwordElement.current?.value &&
+      autorisation
+    ) {
       axios
         .post(`http://localhost:8080/api/plant/connect/register`, {
           email: emailElement.current?.value,
           hash: passwordElement.current?.value,
+          autorisation: autorisation,
         })
         .then((response) => {
           console.log(`valeur response`, response);
           setRetour(response.data.message);
         })
         .catch((error) => {
-          console.log("erreur dans le handleSubmitForm", error);
-          setRetour(error.data.message);
+          console.log("erreur dans le handleSubmitForm", error.message);
+          // setRetour(error.message);
         });
     }
   };

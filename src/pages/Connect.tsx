@@ -6,7 +6,7 @@ const Connect = () => {
   const emailElement = useRef<HTMLInputElement>(null);
   const passwordElement = useRef<HTMLInputElement>(null);
   const [retour, setRetour] = useState<string>("");
-
+  let tokenDecoded;
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
     console.log(emailElement.current?.value);
@@ -18,6 +18,8 @@ const Connect = () => {
           hash: passwordElement.current?.value,
         })
         .then((response) => {
+          tokenDecoded = response.data.decoded;
+          console.log("tokenDecoded", tokenDecoded);
           const tokens = response.data.token;
           localStorage.setItem("tokens", tokens);
           console.log(`valeur token connexion`, tokens);
@@ -103,6 +105,3 @@ const Connect = () => {
 };
 
 export default Connect;
-function newDate(exp: any): any {
-  throw new Error("Function not implemented.");
-}

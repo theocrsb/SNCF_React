@@ -49,6 +49,7 @@ const Update = () => {
         .catch(function (error) {
           console.log("error", error.response.data.message);
           setRetour(error.response.data.message);
+          // localStorage.removeItem("tokens");
         });
     }
   };
