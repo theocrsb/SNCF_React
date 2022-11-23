@@ -2,7 +2,7 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
-
+  // recuperer le token decoder pour afficher ou non des elements
   return (
     <nav className="navbar sticky-top navbar-expand-lg bg-light shadow">
       <div className="container-fluid">
