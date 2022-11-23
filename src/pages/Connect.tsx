@@ -1,12 +1,18 @@
 import axios from "axios";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const Connect = () => {
+interface connectProps {
+  setRetourRole: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Connect = (props: connectProps) => {
   const emailElement = useRef<HTMLInputElement>(null);
   const passwordElement = useRef<HTMLInputElement>(null);
   const [retour, setRetour] = useState<string>("");
   let tokenDecoded;
+
+  const navigate = useNavigate();
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
     console.log(emailElement.current?.value);
@@ -19,9 +25,12 @@ const Connect = () => {
         })
         .then((response) => {
           tokenDecoded = response.data.decoded;
-          console.log("tokenDecoded", tokenDecoded);
+          console.log("tokenDecoded", JSON.stringify(tokenDecoded.role));
           const tokens = response.data.token;
           localStorage.setItem("tokens", tokens);
+          //on stock le role
+          localStorage.setItem("role", JSON.stringify(tokenDecoded.role));
+
           console.log(`valeur token connexion`, tokens);
           let exp = response.data.decoded.exp;
           console.log(exp);
@@ -35,6 +44,17 @@ const Connect = () => {
             ` ${response.data.message}
           jusqu'a ${heureFin}`
           );
+
+          if (JSON.stringify(tokenDecoded.role) === '"admin"') {
+            props.setRetourRole(true);
+          } else {
+            props.setRetourRole(false);
+          }
+          // changement de page 3 sec après
+          // setTimeout(() => {
+          //   console.log("Retardée de trois seconde.");
+          //   navigate("/connect");
+          // }, 3000);
         })
         .catch((error) => {
           console.log("erreur dans le handleSubmitForm", error);

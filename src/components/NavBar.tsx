@@ -1,8 +1,38 @@
-import axios from "axios";
-import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const NavBar = () => {
-  // recuperer le token decoder pour afficher ou non des elements
+interface RetourApp {
+  retourRole: boolean;
+  setRetourRole: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NavBar = (props: RetourApp) => {
+  const navigate = useNavigate();
+  // // recuperer le token decoder pour afficher ou non des elements
+  // const [retourRole, setRetourRole] = useState<boolean>();
+
+  // useEffect(() => {
+  //   let role = localStorage.getItem("role");
+  //   console.log("role dans la navbar", role);
+  //   if (role === '"admin"') {
+  //     setRetourRole(true);
+  //   } else {
+  //     setRetourRole(false);
+  //   }
+  // }, []);
+  // console.log(retourRole);
+
+  // Deco
+  const handleClickOut = () => {
+    console.log("dans le delete");
+    localStorage.removeItem("tokens");
+    localStorage.removeItem("role");
+    props.setRetourRole(false);
+    setTimeout(() => {
+      navigate("/home");
+    }, 0);
+  };
+
   return (
     <nav className="navbar sticky-top navbar-expand-lg bg-light shadow">
       <div className="container-fluid">
@@ -55,11 +85,30 @@ const NavBar = () => {
               </NavLink>
             </li>
 
-            {/* <li className="nav-item">
-              <NavLink to="/register" className="nav-link">
-                Sign in
-              </NavLink>
-            </li> */}
+            {/*  */}
+            {props.retourRole && (
+              <li className="nav-item">
+                <NavLink to="/admin" className="nav-link">
+                  Admin
+                </NavLink>
+              </li>
+            )}
+
+            {/* Deco */}
+            <NavLink to="/connect">
+              <div className="text-center">
+                {" "}
+                <label htmlFor="deco">
+                  <input
+                    type="button"
+                    id="deco"
+                    value="Sign out"
+                    className="btn btn-danger "
+                    onClick={handleClickOut}
+                  />{" "}
+                </label>
+              </div>
+            </NavLink>
           </ul>
         </div>
       </div>

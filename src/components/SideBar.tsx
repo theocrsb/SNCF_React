@@ -21,6 +21,7 @@ const SideBar = ({
   const categories = _.uniq(listElementPlant.map((plante) => plante.category));
   const [checkCategories, setCheckCategories] = useState<string[]>([]);
   const [minMax, setMinMax] = useState<number[]>([0, 0]);
+  console.log(minMax);
   // usestate pour le tri rating
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -67,6 +68,7 @@ const SideBar = ({
   const handleClickOut = () => {
     console.log("dans le delete");
     localStorage.removeItem("tokens");
+    localStorage.removeItem("role");
   };
 
   return (

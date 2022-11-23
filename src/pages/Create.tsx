@@ -1,12 +1,6 @@
 import axios from "axios";
-import React, {
-  LegacyRef,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Navigate, redirect } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Plante } from "./Home";
 
 // Reste à ajouter fonctionnalité pour proposer des IMG de plantes !
@@ -20,6 +14,8 @@ const Create = () => {
   const plantPicture = useRef<HTMLSelectElement>(null);
   const plantRating = useRef<HTMLSelectElement>(null);
   const [listplant, setListplant] = useState<Plante[]>([]);
+
+ 
 
   let tokens = localStorage.getItem("tokens");
   // console.log("token", tokens);
