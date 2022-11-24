@@ -19,39 +19,30 @@ const Update = () => {
   let tokens = localStorage.getItem("tokens");
 
   const handleSubmit = () => {
-    if (
-      plantName.current?.value &&
-      plantPrice.current?.value &&
-      plantQuantity.current?.value &&
-      plantCategory.current?.value &&
-      plantRating.current?.value &&
-      plantRating.current?.value
-    ) {
-      axios
-        .put(
-          `http://localhost:8080/api/plant/${params.id}`,
-          {
-            name: plantName.current?.value,
-            unitprice_ati: plantPrice.current?.value,
-            quantity: plantQuantity.current?.value,
-            category: plantCategory.current?.value,
-            rating: plantRating.current?.value,
-            url_picture: plantPicture.current?.value,
-          },
-          {
-            headers: { authorization: `Bearer ${tokens}` },
-          }
-        )
-        .then(function (response) {
-          console.log("reponse", response.statusText);
-          setRetour(response.data.message);
-        })
-        .catch(function (error) {
-          console.log("error", error.response.data.message);
-          setRetour(error.response.data.message);
-          // localStorage.removeItem("tokens");
-        });
-    }
+    axios
+      .put(
+        `http://localhost:8080/api/plant/${params.id}`,
+        {
+          name: plantName.current?.value,
+          unitprice_ati: plantPrice.current?.value,
+          quantity: plantQuantity.current?.value,
+          category: plantCategory.current?.value,
+          rating: plantRating.current?.value,
+          url_picture: plantPicture.current?.value,
+        },
+        {
+          headers: { authorization: `Bearer ${tokens}` },
+        }
+      )
+      .then(function (response) {
+        console.log("reponse", response.statusText);
+        setRetour(response.data.message);
+      })
+      .catch(function (error) {
+        console.log("error", error.response.data.message);
+        setRetour(error.response.data.message);
+        // localStorage.removeItem("tokens");
+      });
   };
 
   useEffect(() => {

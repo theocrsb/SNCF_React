@@ -8,19 +8,6 @@ interface RetourApp {
 
 const NavBar = (props: RetourApp) => {
   const navigate = useNavigate();
-  // // recuperer le token decoder pour afficher ou non des elements
-  // const [retourRole, setRetourRole] = useState<boolean>();
-
-  // useEffect(() => {
-  //   let role = localStorage.getItem("role");
-  //   console.log("role dans la navbar", role);
-  //   if (role === '"admin"') {
-  //     setRetourRole(true);
-  //   } else {
-  //     setRetourRole(false);
-  //   }
-  // }, []);
-  // console.log(retourRole);
 
   // Deco
   const handleClickOut = () => {
@@ -53,45 +40,44 @@ const NavBar = (props: RetourApp) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              {/* <a className='nav-link active' aria-current='page' href='#'>
-                Home
-              </a> */}
+            
               <NavLink to="/home" end className="nav-link">
                 Home
               </NavLink>
             </li>
             <li className="nav-item">
-              {/* <a className='nav-link' href='#'>
-                Details
-              </a> */}
+             
               <NavLink to="/selectid" className="nav-link">
                 Details
               </NavLink>
             </li>
             <li className="nav-item">
-              {/* <a className='nav-link' href='#'>
-                Details
-              </a> */}
+              
               <NavLink to="/create" className="nav-link">
                 Create
               </NavLink>
             </li>
             <li className="nav-item">
-              {/* <a className='nav-link' href='#'>
-                Details
-              </a> */}
+            
               <NavLink to="/connect" className="nav-link">
                 Sign in
               </NavLink>
             </li>
 
-            {/*  */}
+            {/* Admin si role admin (state dans App) */}
             {props.retourRole && (
-              <li className="nav-item">
-                <NavLink to="/admin" className="nav-link">
-                  Admin
-                </NavLink>
-              </li>
+              <NavLink to="/admin">
+                <div className="text-center">
+                  <label htmlFor="admin">
+                    <input
+                      type="button"
+                      id="deco"
+                      value="Admin"
+                      className="btn btn-warning "
+                    />
+                  </label>
+                </div>
+              </NavLink>
             )}
 
             {/* Deco */}

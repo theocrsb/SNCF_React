@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Navigate, NavLink, useParams } from "react-router-dom";
+import { Navigate, NavLink, useNavigate, useParams } from "react-router-dom";
 
 import { Plante } from "./Home";
 
@@ -9,6 +9,7 @@ const Oneplant = () => {
   const [retour, setRetour] = useState<string>();
   const params = useParams();
   // console.log(params.id);
+  const navigate = useNavigate();
 
   let tokens = localStorage.getItem("tokens");
   useEffect(() => {
@@ -33,6 +34,10 @@ const Oneplant = () => {
       .then((x) => {
         console.log(x.data);
         setRetour(x.data.message);
+        setTimeout(() => {
+          console.log("Retardée 2 sec.");
+          navigate("/home");
+        }, 2000);
       })
       .catch((error) => {
         console.log(error);
