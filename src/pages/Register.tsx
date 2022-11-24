@@ -53,7 +53,7 @@ const Register = () => {
         <span>Inscription </span>
       </div>
       <div>
-        <form onClick={handleSubmitForm}>
+        <form onSubmit={handleSubmitForm}>
           <div className="form-floating mb-3">
             <input
               type="email"
@@ -61,6 +61,7 @@ const Register = () => {
               id="emailUser"
               placeholder="name@example.com"
               ref={emailElement}
+              required
             />
             <label htmlFor="emailUser">Email</label>
           </div>
@@ -71,6 +72,7 @@ const Register = () => {
               id="passwordUser"
               placeholder="Password"
               ref={passwordElement}
+              required
             />
             <label htmlFor="passwordUser">Mot de passe</label>
           </div>
