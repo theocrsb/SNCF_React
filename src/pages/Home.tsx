@@ -1,8 +1,6 @@
-// import { list_products } from "../data";
 import SideBar from "../components/SideBar";
 import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
-// import { min } from "lodash";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
@@ -22,7 +20,6 @@ export interface Plante {
 
 // const listePlantes: Plante[] = list_products;
 let listePlantes: Plante[] = [];
-
 let checkedCateg: string[] = [];
 let retourSearchBar: string = "";
 let retourMinMax: number[];
@@ -47,7 +44,7 @@ const Home = () => {
   const [listPlantDisplayed, setListPlantDisplayed] = useState<Plante[]>([
     ...listePlantes,
   ]);
-  const [rating, setRating] = useState(0);
+  // const [rating, setRating] = useState(0);
 
   // console.log("mon tableau de plantes trié : " + listPlantDisplayed);
 
@@ -240,7 +237,7 @@ const Home = () => {
                       );
                     })}
                   </div>
-                  {/* <div className="">⭐{plante.rating}</div> */}
+
                   <div className="d-flex">
                     <div
                       style={{

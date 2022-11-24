@@ -15,11 +15,9 @@ const Create = () => {
   const plantRating = useRef<HTMLSelectElement>(null);
   const [listplant, setListplant] = useState<Plante[]>([]);
 
- 
-
   let tokens = localStorage.getItem("tokens");
   // console.log("token", tokens);
-
+  const navigate = useNavigate();
   const handleSubmit = () => {
     axios
       .post(
@@ -44,16 +42,23 @@ const Create = () => {
           localStorage.removeItem("tokens");
         }
         setRetour(response.data.message);
+        setTimeout(() => {
+          console.log("Retardée de 2 seconde.");
+          navigate("/home");
+        }, 2000);
       })
       .catch(function (error) {
-        console.log("error" + error);
-        setRetour(`${error.code} : Please complete all input.`);
+        console.log("error", error);
+        setRetour(`${error.response.data.message}`);
       });
   };
   useEffect(() => {
     axios
       .get(`http://localhost:8080/api/plant`)
       .then(function (response) {
+        if (response.data.message.toString() === "not verify") {
+          localStorage.removeItem("tokens");
+        }
         setListplant(response.data.data);
       })
       .catch(function (error) {
@@ -63,6 +68,7 @@ const Create = () => {
 
   if (!tokens) {
     console.log("pas de token");
+
     return <Navigate to="/connect" />;
   }
   return (
@@ -74,11 +80,11 @@ const Create = () => {
             <span className="input-group-text">Name</span>
           </div>
           <input
+            required
             type="text"
             className="form-control "
             ref={plantName}
             placeholder="exemple : Monstera Deliciosa"
-            required
           />
         </div>
 
@@ -88,11 +94,11 @@ const Create = () => {
             <span className="input-group-text">Unite Price</span>
           </div>
           <input
+            required
             type="number"
             className="form-control"
             ref={plantPrice}
             placeholder="50"
-            required
           />
         </div>
 
@@ -102,11 +108,11 @@ const Create = () => {
             <span className="input-group-text">Quantity</span>
           </div>
           <input
+            required
             type="number"
             className="form-control"
             ref={plantQuantity}
             placeholder="1"
-            required
           />
         </div>
 
@@ -116,11 +122,11 @@ const Create = () => {
             <span className="input-group-text">Category</span>
           </div>
           <input
+            required
             type="text"
             className="form-control"
             ref={plantCategory}
             placeholder="araceae"
-            required
           />
         </div>
 
@@ -131,6 +137,7 @@ const Create = () => {
           </div>
 
           <select
+            required
             name="img"
             id="img"
             ref={plantRating}
@@ -151,6 +158,7 @@ const Create = () => {
           </div>
 
           <select
+            required
             name="img"
             id="img"
             ref={plantPicture}

@@ -4,6 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 interface RetourApp {
   retourRole: boolean;
   setRetourRole: React.Dispatch<React.SetStateAction<boolean>>;
+  setConnect: React.Dispatch<React.SetStateAction<boolean>>;
+  connect: boolean;
 }
 
 const NavBar = (props: RetourApp) => {
@@ -15,6 +17,7 @@ const NavBar = (props: RetourApp) => {
     localStorage.removeItem("tokens");
     localStorage.removeItem("role");
     props.setRetourRole(false);
+    props.setConnect(false);
     setTimeout(() => {
       navigate("/home");
     }, 0);
@@ -40,29 +43,27 @@ const NavBar = (props: RetourApp) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-            
               <NavLink to="/home" end className="nav-link">
                 Home
               </NavLink>
             </li>
             <li className="nav-item">
-             
               <NavLink to="/selectid" className="nav-link">
                 Details
               </NavLink>
             </li>
             <li className="nav-item">
-              
               <NavLink to="/create" className="nav-link">
                 Create
               </NavLink>
             </li>
-            <li className="nav-item">
-            
-              <NavLink to="/connect" className="nav-link">
-                Sign in
-              </NavLink>
-            </li>
+            {!props.connect && (
+              <li className="nav-item">
+                <NavLink to="/connect" className="nav-link">
+                  Sign in
+                </NavLink>
+              </li>
+            )}
 
             {/* Admin si role admin (state dans App) */}
             {props.retourRole && (

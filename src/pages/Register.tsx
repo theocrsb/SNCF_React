@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Register = () => {

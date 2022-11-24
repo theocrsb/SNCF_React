@@ -14,8 +14,10 @@ import { useEffect, useState } from "react";
 const App = () => {
   // recuperer le token decoder pour afficher ou non des elements
   const [retourRole, setRetourRole] = useState<boolean>(false);
+  const [connect, setConnect] = useState<boolean>(false);
 
   useEffect(() => {
+    // role :
     let role = localStorage.getItem("role");
     console.log("role dans la navbar", role);
     if (role === '"admin"') {
@@ -23,14 +25,28 @@ const App = () => {
     } else {
       setRetourRole(false);
     }
+
+    //isconnect :
+    let token = localStorage.getItem("tokens");
+    console.log("token dans app", token);
+    if (token) {
+      setConnect(true);
+    } else {
+      setConnect(false);
+    }
   }, []);
-  console.log(retourRole);
+  console.log("retour de connect props", connect);
 
   return (
     <div>
       <BrowserRouter>
         {/* On utilise notre composant dans notre JSX */}
-        <NavBar retourRole={retourRole} setRetourRole={setRetourRole} />
+        <NavBar
+          retourRole={retourRole}
+          setRetourRole={setRetourRole}
+          setConnect={setConnect}
+          connect={connect}
+        />
         <Routes>
           <Route path="/home" element={<Home />} />
 
@@ -42,7 +58,9 @@ const App = () => {
 
           <Route
             path="/connect"
-            element={<Connect setRetourRole={setRetourRole} />}
+            element={
+              <Connect setRetourRole={setRetourRole} setConnect={setConnect} />
+            }
           />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<Admin />} />

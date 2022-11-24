@@ -19,6 +19,9 @@ const Oneplant = () => {
         headers: { authorization: `Bearer ${tokens}` },
       })
       .then((x) => {
+        if (x.data.message.toString() === "not verify") {
+          localStorage.removeItem("tokens");
+        }
         setOneplant(x.data.data[0]);
       })
       .catch((error) => {
@@ -32,6 +35,9 @@ const Oneplant = () => {
         headers: { authorization: `Bearer ${tokens}` },
       })
       .then((x) => {
+        if (x.data.message.toString() === "not verify") {
+          localStorage.removeItem("tokens");
+        }
         console.log(x.data);
         setRetour(x.data.message);
         setTimeout(() => {

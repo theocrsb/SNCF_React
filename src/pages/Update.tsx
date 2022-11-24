@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Plante } from "./Home";
 
 // Reste à ajouter fonctionnalité pour proposer des IMG de plantes !
@@ -17,7 +17,7 @@ const Update = () => {
   const [listplant, setListplant] = useState<Plante[]>([]);
 
   let tokens = localStorage.getItem("tokens");
-
+  const navigate = useNavigate();
   const handleSubmit = () => {
     axios
       .put(
@@ -35,8 +35,15 @@ const Update = () => {
         }
       )
       .then(function (response) {
+        if (response.data.message.toString() === "not verify") {
+          localStorage.removeItem("tokens");
+        }
         console.log("reponse", response.statusText);
         setRetour(response.data.message);
+        setTimeout(() => {
+          console.log("Retardée de 2 seconde.");
+          navigate("/home");
+        }, 2000);
       })
       .catch(function (error) {
         console.log("error", error.response.data.message);
@@ -51,6 +58,9 @@ const Update = () => {
         headers: { authorization: `Bearer ${tokens}` },
       })
       .then(function (response) {
+        if (response.data.message.toString() === "not verify") {
+          localStorage.removeItem("tokens");
+        }
         setListplant(response.data.data);
       })
       .catch(function (error) {

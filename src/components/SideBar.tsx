@@ -65,11 +65,11 @@ const SideBar = ({
     onClickRating(rating);
   };
 
-  const handleClickOut = () => {
-    console.log("dans le delete");
-    localStorage.removeItem("tokens");
-    localStorage.removeItem("role");
-  };
+  // const handleClickOut = () => {
+  //   console.log("dans le delete");
+  //   localStorage.removeItem("tokens");
+  //   localStorage.removeItem("role");
+  // };
 
   return (
     <div className="custom-side-bar flex-shrink-0 bg-white border-end">
@@ -175,7 +175,7 @@ const SideBar = ({
         />
         <label htmlFor="avis"></label>
       </div>
-      <br />
+      {/* <br />
       <NavLink to="/connect">
         <div className="text-center">
           {" "}
@@ -189,7 +189,7 @@ const SideBar = ({
             />{" "}
           </label>
         </div>
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 };

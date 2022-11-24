@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 interface connectProps {
   setRetourRole: React.Dispatch<React.SetStateAction<boolean>>;
+  setConnect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Connect = (props: connectProps) => {
@@ -25,13 +26,14 @@ const Connect = (props: connectProps) => {
         })
         .then((response) => {
           tokenDecoded = response.data.decoded;
-          console.log("tokenDecoded", JSON.stringify(tokenDecoded.role));
+          //console.log("tokenDecoded", JSON.stringify(tokenDecoded.role));
           const tokens = response.data.token;
           localStorage.setItem("tokens", tokens);
+          props.setConnect(tokens);
           //on stock le role
           localStorage.setItem("role", JSON.stringify(tokenDecoded.role));
 
-          console.log(`valeur token connexion`, tokens);
+          //console.log(`valeur token connexion`, tokens);
           let exp = response.data.decoded.exp;
           console.log(exp);
           let date = new Date(exp * 1000);
@@ -39,7 +41,7 @@ const Connect = (props: connectProps) => {
           let minutes = date.getMinutes();
 
           let heureFin = `${heure}h${minutes} ! `;
-          console.log(heure);
+          //console.log(heure);
           setRetour(
             ` ${response.data.message}
           jusqu'a ${heureFin}`
@@ -50,11 +52,11 @@ const Connect = (props: connectProps) => {
           } else {
             props.setRetourRole(false);
           }
-          // changement de page 3 sec après
-          // setTimeout(() => {
-          //   console.log("Retardée de trois seconde.");
-          //   navigate("/connect");
-          // }, 3000);
+
+          setTimeout(() => {
+            console.log("Retardée de trois seconde.");
+            navigate("/home");
+          }, 3000);
         })
         .catch((error) => {
           console.log("erreur dans le handleSubmitForm", error);
