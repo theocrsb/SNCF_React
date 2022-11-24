@@ -18,39 +18,49 @@ const Create = () => {
   let tokens = localStorage.getItem("tokens");
   // console.log("token", tokens);
   const navigate = useNavigate();
-  const handleSubmit = () => {
-    axios
-      .post(
-        `http://localhost:8080/api/plant`,
-        {
-          name: plantName.current?.value,
-          unitprice_ati: Number(plantPrice.current?.value),
-          quantity: Number(plantQuantity.current?.value),
-          category: plantCategory.current?.value,
-          rating: Number(plantRating.current?.value),
-          url_picture: plantPicture.current?.value,
-        },
-        {
-          headers: { authorization: `Bearer ${tokens}` },
-        }
-      )
-      .then(function (response) {
-        console.log(
-          `reponse de la creation de plante ${response.data.message}`
-        );
-        if (response.data.message.toString() === "not verify") {
-          localStorage.removeItem("tokens");
-        }
-        setRetour(response.data.message);
-        setTimeout(() => {
-          console.log("Retardée de 2 seconde.");
-          navigate("/home");
-        }, 2000);
-      })
-      .catch(function (error) {
-        console.log("error", error);
-        setRetour(`${error.response.data.message}`);
-      });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (
+      plantName.current &&
+      plantPrice.current &&
+      plantQuantity.current &&
+      plantCategory.current &&
+      plantPicture.current &&
+      plantRating.current
+    )
+      axios
+        .post(
+          `http://localhost:8080/api/plant`,
+          {
+            name: plantName.current?.value,
+            unitprice_ati: Number(plantPrice.current?.value),
+            quantity: Number(plantQuantity.current?.value),
+            category: plantCategory.current?.value,
+            rating: Number(plantRating.current?.value),
+            url_picture: plantPicture.current?.value,
+          },
+          {
+            headers: { authorization: `Bearer ${tokens}` },
+          }
+        )
+        .then(function (response) {
+          console.log(
+            `reponse de la creation de plante ${response.data.message}`
+          );
+          if (response.data.message.toString() === "not verify") {
+            localStorage.removeItem("tokens");
+          }
+          setRetour(response.data.message);
+          setTimeout(() => {
+            console.log("Retardée de 2 seconde.");
+            navigate("/home");
+          }, 2000);
+        })
+        .catch(function (error) {
+          console.log("error", error);
+          setRetour(`${error.response.data.message}`);
+        });
   };
   useEffect(() => {
     axios
@@ -75,125 +85,127 @@ const Create = () => {
     <div className="d-flex justifycenter">
       <div className="w-50 m-3">
         {/* input choix name */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Name</span>
-          </div>
-          <input
-            required
-            type="text"
-            className="form-control "
-            ref={plantName}
-            placeholder="exemple : Monstera Deliciosa"
-          />
-        </div>
+        <form className="row g-3 needs-validation" onSubmit={handleSubmit}>
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Name</span>
+            </div>
 
-        {/* input choix prix unité */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Unite Price</span>
-          </div>
-          <input
-            required
-            type="number"
-            className="form-control"
-            ref={plantPrice}
-            placeholder="50"
-          />
-        </div>
-
-        {/* input choix quantité */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Quantity</span>
-          </div>
-          <input
-            required
-            type="number"
-            className="form-control"
-            ref={plantQuantity}
-            placeholder="1"
-          />
-        </div>
-
-        {/* input choix categorie */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Category</span>
-          </div>
-          <input
-            required
-            type="text"
-            className="form-control"
-            ref={plantCategory}
-            placeholder="araceae"
-          />
-        </div>
-
-        {/* input choix rating */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Rating</span>
+            <input
+              required
+              type="text"
+              className="form-control "
+              ref={plantName}
+              placeholder="exemple : Monstera Deliciosa"
+            />
           </div>
 
-          <select
-            required
-            name="img"
-            id="img"
-            ref={plantRating}
-            className="form-control"
+          {/* input choix prix unité */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Unite Price</span>
+            </div>
+            <input
+              required
+              type="number"
+              className="form-control"
+              ref={plantPrice}
+              placeholder="50"
+            />
+          </div>
+
+          {/* input choix quantité */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Quantity</span>
+            </div>
+            <input
+              required
+              type="number"
+              className="form-control"
+              ref={plantQuantity}
+              placeholder="1"
+            />
+          </div>
+
+          {/* input choix categorie */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Category</span>
+            </div>
+            <input
+              required
+              type="text"
+              className="form-control"
+              ref={plantCategory}
+              placeholder="araceae"
+            />
+          </div>
+
+          {/* input choix rating */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Rating</span>
+            </div>
+
+            <select
+              required
+              name="img"
+              id="img"
+              ref={plantRating}
+              className="form-control"
+            >
+              <option value="1">1/5</option>
+              <option value="2">2/5</option>
+              <option value="3">3/5</option>
+              <option value="4">4/5</option>
+              <option value="5">5/5</option>
+            </select>
+          </div>
+
+          {/* input choix image */}
+          <div className="input-group m-3 w-100">
+            <div className="input-group-prepend">
+              <span className="input-group-text">URL Picture</span>
+            </div>
+
+            <select
+              required
+              name="img"
+              id="img"
+              ref={plantPicture}
+              className="form-control"
+            >
+              {listplant.map((x, i) => (
+                <option key={i} value={x.url_picture}>
+                  {x.url_picture}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* btn Submit */}
+          <div className="d-flex justifycenter mb-3">
+            <button
+              type="submit"
+              className="btn btn-secondary btn-lg btn-block"
+              value=" Create New Plant"
+            >
+              Create New Plant
+            </button>
+          </div>
+
+          <div
+            className="text-center"
+            style={{
+              fontWeight: "bolder",
+              fontSize: 40,
+              color: "black",
+            }}
           >
-            <option value="1">1/5</option>
-            <option value="2">2/5</option>
-            <option value="3">3/5</option>
-            <option value="4">4/5</option>
-            <option value="5">5/5</option>
-          </select>
-        </div>
-
-        {/* input choix image */}
-        <div className="input-group m-3 w-100">
-          <div className="input-group-prepend">
-            <span className="input-group-text">URL Picture</span>
+            {retour}
           </div>
-
-          <select
-            required
-            name="img"
-            id="img"
-            ref={plantPicture}
-            className="form-control"
-          >
-            {listplant.map((x, i) => (
-              <option key={i} value={x.url_picture}>
-                {x.url_picture}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* btn Submit */}
-        <div className="d-flex justifycenter mb-3">
-          <button
-            onClick={handleSubmit}
-            type="button"
-            className="btn btn-secondary btn-lg btn-block"
-            value=" Create New Plant"
-          >
-            Create New Plant
-          </button>
-        </div>
-
-        <div
-          className="text-center"
-          style={{
-            fontWeight: "bolder",
-            fontSize: 40,
-            color: "black",
-          }}
-        >
-          {retour}
-        </div>
+        </form>
       </div>
     </div>
   );

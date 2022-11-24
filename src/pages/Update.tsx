@@ -18,7 +18,8 @@ const Update = () => {
 
   let tokens = localStorage.getItem("tokens");
   const navigate = useNavigate();
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     axios
       .put(
         `http://localhost:8080/api/plant/${params.id}`,
@@ -78,124 +79,126 @@ const Update = () => {
     <div className="d-flex justifycenter">
       <div className="w-50 m-3">
         {/* input choix name */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Name</span>
-          </div>
-          <input
-            type="text"
-            className="form-control "
-            ref={plantName}
-            placeholder="exemple : Monstera Deliciosa"
-            required
-          />
-        </div>
-
-        {/* input choix prix unité */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Unite Price</span>
-          </div>
-          <input
-            type="number"
-            className="form-control"
-            ref={plantPrice}
-            placeholder="50"
-            required
-          />
-        </div>
-
-        {/* input choix quantité */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Quantity</span>
-          </div>
-          <input
-            type="number"
-            className="form-control"
-            ref={plantQuantity}
-            placeholder="1"
-            required
-          />
-        </div>
-
-        {/* input choix categorie */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Category</span>
-          </div>
-          <input
-            type="text"
-            className="form-control"
-            ref={plantCategory}
-            placeholder="araceae"
-            required
-          />
-        </div>
-
-        {/* input choix rating */}
-        <div className="input-group m-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Rating</span>
+        <form className="row g-3 needs-validation" onSubmit={handleSubmit}>
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Name</span>
+            </div>
+            <input
+              type="text"
+              className="form-control "
+              ref={plantName}
+              placeholder="exemple : Monstera Deliciosa"
+              required
+            />
           </div>
 
-          <select
-            name="img"
-            id="img"
-            ref={plantRating}
-            className="form-control"
-            required
+          {/* input choix prix unité */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Unite Price</span>
+            </div>
+            <input
+              type="number"
+              className="form-control"
+              ref={plantPrice}
+              placeholder="50"
+              required
+            />
+          </div>
+
+          {/* input choix quantité */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Quantity</span>
+            </div>
+            <input
+              type="number"
+              className="form-control"
+              ref={plantQuantity}
+              placeholder="1"
+              required
+            />
+          </div>
+
+          {/* input choix categorie */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Category</span>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              ref={plantCategory}
+              placeholder="araceae"
+              required
+            />
+          </div>
+
+          {/* input choix rating */}
+          <div className="input-group m-3">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Rating</span>
+            </div>
+
+            <select
+              name="img"
+              id="img"
+              ref={plantRating}
+              className="form-control"
+              required
+            >
+              <option value="1">1/5</option>
+              <option value="2">2/5</option>
+              <option value="3">3/5</option>
+              <option value="4">4/5</option>
+              <option value="5">5/5</option>
+            </select>
+          </div>
+
+          {/* input choix image */}
+          <div className="input-group m-3 w-100">
+            <div className="input-group-prepend">
+              <span className="input-group-text">URL Picture</span>
+            </div>
+
+            <select
+              name="img"
+              id="img"
+              ref={plantPicture}
+              className="form-control"
+              required
+            >
+              {listplant.map((x, i) => (
+                <option key={i} value={x.url_picture}>
+                  {x.url_picture}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="d-flex justifycenter mb-3">
+            <button
+              // onClick={handleSubmit}
+              type="submit"
+              className="btn btn-secondary btn-lg btn-block"
+              value="Update This Plant"
+            >
+              Update This Plant
+            </button>
+          </div>
+
+          <div
+            className="textcenter"
+            style={{
+              fontWeight: "bold",
+              margin: 30,
+              fontSize: 30,
+            }}
           >
-            <option value="1">1/5</option>
-            <option value="2">2/5</option>
-            <option value="3">3/5</option>
-            <option value="4">4/5</option>
-            <option value="5">5/5</option>
-          </select>
-        </div>
-
-        {/* input choix image */}
-        <div className="input-group m-3 w-100">
-          <div className="input-group-prepend">
-            <span className="input-group-text">URL Picture</span>
+            <p>{retour}</p>
           </div>
-
-          <select
-            name="img"
-            id="img"
-            ref={plantPicture}
-            className="form-control"
-            required
-          >
-            {listplant.map((x, i) => (
-              <option key={i} value={x.url_picture}>
-                {x.url_picture}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="d-flex justifycenter mb-3">
-          <button
-            onClick={handleSubmit}
-            type="button"
-            className="btn btn-secondary btn-lg btn-block"
-            value="Update This Plant"
-          >
-            Update This Plant
-          </button>
-        </div>
-
-        <div
-          className="textcenter"
-          style={{
-            fontWeight: "bold",
-            margin: 30,
-            fontSize: 30,
-          }}
-        >
-          <p>{retour}</p>
-        </div>
+        </form>
       </div>
     </div>
   );

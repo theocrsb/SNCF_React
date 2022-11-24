@@ -1,6 +1,7 @@
 import { tab } from "@testing-library/user-event/dist/tab";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export interface User {
   email: string;
@@ -9,8 +10,9 @@ export interface User {
 
 const Admin = () => {
   const [tab, setTab] = useState<User[]>([]);
+  let navigate = useNavigate();
+  let tokens = localStorage.getItem("tokens");
   useEffect(() => {
-    let tokens = localStorage.getItem("tokens");
     axios
       .get(`http://localhost:8080/api/plant/connect/all`, {
         headers: { authorization: `Bearer ${tokens}` },
@@ -21,6 +23,11 @@ const Admin = () => {
       });
   }, []);
   console.log(tab);
+
+  if (!tokens) {
+    console.log("pas de token");
+    navigate("/connect");
+  }
   return (
     <div>
       <ul className="stylenone list-group">
@@ -28,7 +35,6 @@ const Admin = () => {
           <li className="list-group-item">{x.email}</li>
         ))}
       </ul>
-      
     </div>
   );
 };
